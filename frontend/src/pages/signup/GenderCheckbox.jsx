@@ -1,6 +1,6 @@
 import React from "react";
 
-export const GenderCheckbox = ({ oncCheckBoxChange, selectedGender }) => {
+export const GenderCheckbox = ({ onCheckBoxChange, selectedGender }) => {
   return (
     <div className="flex">
       <div className="form-control">
@@ -14,7 +14,7 @@ export const GenderCheckbox = ({ oncCheckBoxChange, selectedGender }) => {
             type="checkbox"
             className="checkbox border-slate-900"
             checked={selectedGender === "male"}
-            onChange={(e) => oncCheckBoxChange("male")}
+            onChange={(e) => onCheckBoxChange("male")}
           />
         </label>
       </div>
@@ -29,7 +29,7 @@ export const GenderCheckbox = ({ oncCheckBoxChange, selectedGender }) => {
             type="checkbox"
             className="checkbox border-slate-900"
             checked={selectedGender === "female"}
-            onChange={(e) => oncCheckBoxChange("female")}
+            onChange={(e) => onCheckBoxChange("female")}
           />
         </label>
       </div>
