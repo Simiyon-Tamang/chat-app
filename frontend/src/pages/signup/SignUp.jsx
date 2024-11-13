@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { GenderCheckbox } from "./GenderCheckbox";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
+  const [inputs, setInputs] = useState({
+    fullName: "",
+    userName: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleCheckBoxChange = (gender) => {
+    setInputs({ ...inputs, gender });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputs);
+  };
   return (
     <div className="min-w-96">
       <section className="rounded-md p-2 bg-white">
@@ -12,9 +28,12 @@ const SignUp = () => {
               Sign up to create account
             </h2>
             <p className="mt-2 text-base text-gray-600">
-              Already have an account? Sign In
+              Already have an account?{" "}
+              <Link to={"/login"} className="text-[#7747ff]">
+                Sign In
+              </Link>
             </p>
-            <form className="mt-5">
+            <form className="mt-5" onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
                   <label className="text-base font-medium text-gray-900">
@@ -22,6 +41,10 @@ const SignUp = () => {
                   </label>
                   <div className="mt-2">
                     <input
+                      value={inputs.fullName}
+                      onChange={(e) =>
+                        setInputs({ ...inputs, fullName: e.target.value })
+                      }
                       placeholder="Full Name"
                       type="text"
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
@@ -35,6 +58,10 @@ const SignUp = () => {
                   </label>
                   <div className="mt-2">
                     <input
+                      value={inputs.userName}
+                      onChange={(e) =>
+                        setInputs({ ...inputs, userName: e.target.value })
+                      }
                       placeholder="User Name"
                       type="text"
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
@@ -51,12 +78,40 @@ const SignUp = () => {
                   </div>
                   <div className="mt-2">
                     <input
+                      value={inputs.password}
+                      onChange={(e) =>
+                        setInputs({ ...inputs, password: e.target.value })
+                      }
                       placeholder="Password"
                       type="password"
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       name="password"
                     />
                   </div>
+
+                  <div>
+                    <div className=" mt-2 flex items-center justify-between">
+                      <label className="text-base font-medium text-gray-900">
+                        Cofirm Password
+                      </label>
+                    </div>
+                    <div className="mt-2">
+                      <input
+                        value={inputs.confirmPassword}
+                        onChange={(e) =>
+                          setInputs({
+                            ...inputs,
+                            confirmPassword: e.target.value,
+                          })
+                        }
+                        placeholder="confirm Password"
+                        type="password"
+                        className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                        name="password"
+                      />
+                    </div>
+                  </div>
+
                   <div className="flex items-center justify-between mt-3">
                     <label className="text-base font-medium text-gray-900">
                       Profile Picture
@@ -70,11 +125,14 @@ const SignUp = () => {
                     />
                   </div>
                 </div>
-                <GenderCheckbox />
+                <GenderCheckbox
+                  oncCheckBoxChange={handleCheckBoxChange}
+                  selectedGender={inputs.gender}
+                />
                 <div>
                   <button
                     className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
-                    type="button"
+                    type="submit"
                   >
                     Create Account
                   </button>
