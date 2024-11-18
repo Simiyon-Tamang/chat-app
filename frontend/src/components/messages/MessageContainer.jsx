@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Messages } from "./Messages";
 import { MessageInput } from "./MessageInput";
+import useConversation from "../../zustand/useConversation";
 
 export const MessageContainer = () => {
-  const noChatSelected = true;
+  const { selectedConversation, setSelectedConversation } = useConversation();
+
+  useEffect(() => {
+    //cleanup function to remove selected conversation
+    return () => setSelectedConversation(null);
+  }, [setSelectedConversation]);
   return (
     <div className="md:min-w-[450px] flex flex-col">
-      {noChatSelected ? (
+      {!selectedConversation ? (
         <NoChatSelected />
       ) : (
         <>
           <div className="bg-slate-500 px-4 py-2 mb-2 mx-2 mt-1">
-            <span className="text-gray-900 font-bold">John doe</span>
+            <span className="text-gray-900 font-bold">
+              {selectedConversation.fullName}
+            </span>
           </div>
 
           <Messages />

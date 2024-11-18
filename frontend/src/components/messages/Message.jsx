@@ -1,44 +1,30 @@
 import React from "react";
+import { useAuthContext } from "../../contexts/AuthContext";
+import useConversation from "../../zustand/useConversation";
+import { extractTime } from "../../utils/extractTime";
 
-export const Message = () => {
+export const Message = ({ message }) => {
+  const { authUser } = useAuthContext();
+  const { selectedConversation } = useConversation();
+  const fromMe = message.senderId === authUser._id;
+  const chatClassName = fromMe ? "chat chat-end" : "chat chat-start";
+  const profilePic = fromMe
+    ? authUser.profilePic
+    : selectedConversation?.profilePic;
+  const bubbleBgColor = fromMe ? "bg-blue-500" : "";
+  const formattedTime = extractTime(message.createdAt);
   return (
     <div>
-      <div className="chat chat-start">
+      <div className={chatClassName}>
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">
-            <img
-              alt="Tailwind CSS chat bubble component"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-            />
+            <img alt="Tailwind CSS chat bubble component" src={profilePic} />
           </div>
         </div>
-        <div className="chat-bubble">
-          It was said that you would, destroy the Sith, not join them.
+        <div className={`chat-bubble ${bubbleBgColor}`}>{message.message}</div>
+        <div className="chat-footer opacity-50 text-xs flex gap-1">
+          {formattedTime}
         </div>
-      </div>
-      <div className="chat chat-start">
-        <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
-            <img
-              alt="Tailwind CSS chat bubble component"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-            />
-          </div>
-        </div>
-        <div className="chat-bubble">
-          It was you who would bring balance to the Force
-        </div>
-      </div>
-      <div className="chat chat-end">
-        <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
-            <img
-              alt="Tailwind CSS chat bubble component"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-            />
-          </div>
-        </div>
-        <div className="chat-bubble">Not leave it in Darkness</div>
       </div>
     </div>
   );

@@ -4,7 +4,6 @@ import useGetConversations from "../../hooks/useGetConversations";
 
 const Converstions = () => {
   const { loading, conversations } = useGetConversations();
-  console.log("conversations: ", conversations);
   return (
     <div className="py=2 flex flex-col overflow-auto">
       {loading ? (
@@ -12,7 +11,7 @@ const Converstions = () => {
       ) : (
         conversations.map((conversation, idx) => (
           <Conversation
-            key={conversation.id}
+            key={conversation._id}
             conversation={conversation}
             lastIdx={idx === conversation.length - 1}
           />
