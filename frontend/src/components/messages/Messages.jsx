@@ -5,12 +5,11 @@ import MessageSkeleton from "../../skeletons/MessageSkeleton";
 
 export const Messages = () => {
   const { messages, loading } = useGetMessages();
-  const containerRef = useRef();
-
+  const containerRef = useRef(null);
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
+    setTimeout(() => {
+      containerRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   }, [messages]);
   return (
     <div className="px-4 flex-1 overflow-auto">
