@@ -12,7 +12,7 @@ export const Messages = () => {
     }, 100);
   }, [messages]);
   return (
-    <div className="px-4 flex-1 overflow-auto">
+    <div className="px-4 flex-1 overflow-auto" ref={containerRef}>
       {!loading &&
         messages.length > 0 &&
         messages.map((message) => (
